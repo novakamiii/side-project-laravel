@@ -13,9 +13,10 @@ class NavigationController extends Controller
         return view('welcome');
     }
 
-    public function productPage()
+    public function productPage(Request $request)
     {
-        return view('product-page');
+        $product = Product::where('id', $request->query('item'))->firstOrFail();
+        return view('product-page', compact('product'));
     }
 
     public function tags(Request $request, $tag = null)   // route param inject

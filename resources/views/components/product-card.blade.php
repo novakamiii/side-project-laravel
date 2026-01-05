@@ -14,8 +14,9 @@
         <p class="text-sm text-gray-500 mb-2">{{ $prodDesc }}</p>
         <div class="flex justify-between items-center mt-4">
             <span class="text-lg font-semibold text-green-600">{{ $prodPrice }}</span>
-            <a href="/Product"> <button
-                    class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800">Buy</button></a>
+            <a href="{{ url('Product') }}?item={{ $prodId }}">
+                <button class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800">Buy</button>
+            </a>
         </div>
     </div>
 </div>

@@ -16,15 +16,16 @@
     </style>
 </x-page-title>
 
+
 <body class="bg-gray-50 text-gray-800 antialiased">
     <x-navbar> </x-navbar>
     <main class="max-w-6xl mx-auto p-6 lg:p-10">
         <!-- Breadcrumb / Header -->
         <nav class="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
             <ol class="flex items-center gap-2">
-                <li><a href="/" class="hover:underline">Back to products</a></li>
+                <li><a href="/Products" class="hover:underline">Back to products</a></li>
                 <li>•</li>
-                <li class="text-gray-700">Plums</li>
+                <li class="text-gray-700">{{ $product->name }}</li>
             </ol>
         </nav>
 
@@ -34,14 +35,17 @@
                 <div class="rounded-xl overflow-hidden bg-white p-6 shadow-sm">
                     <div class="relative">
                         <span
-                            class="absolute left-4 top-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-500 text-white shadow">6%
-                            OFF</span>
-                        <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?q=80&w=1200&auto=format&fit=crop"
+                            class="absolute left-4 top-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+                            {{ $product->sale ? 'bg-red-500' : 'bg-gray-500' }} text-white shadow">
+                            {{ $product->sale ? 'SALE' : 'NEW' }}
+                        </span>
+
+                        <img src="https://www.dummyimage.com/600x400/83e688/fff.png&text={{ $product->name }}"
                             alt="Plums" class="w-full h-96 object-cover rounded-lg" />
                     </div>
                     <div class="mt-4 flex gap-3 items-center">
                         <div class="w-16 h-16 rounded-md border p-1 flex items-center justify-center bg-white">
-                            <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?q=80&w=400&auto=format&fit=crop"
+                            <img src="https://www.dummyimage.com/600x400/83e688/fff.png&text={{ $product->name }}"
                                 alt="thumb" class="w-full h-full object-cover rounded-sm" />
                         </div>
                         <div class="text-sm text-gray-500">High-resolution images • 4 views</div>
@@ -50,8 +54,7 @@
 
                 <div class="bg-white rounded-xl p-4 shadow-sm">
                     <h3 class="text-sm font-semibold text-gray-700 mb-2">About this product</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed">Fresh, juicy plums sourced from local orchards.
-                        Packed and shipped within hours to preserve taste and quality. Ideal for snacking and desserts.
+                    <p class="text-sm text-gray-600 leading-relaxed"> {{ $product->desc }}
                     </p>
                 </div>
             </div>
@@ -59,14 +62,11 @@
             <!-- RIGHT: Product Info -->
             <aside class="sticky top-6">
                 <div class="bg-white rounded-xl shadow p-6 lg:p-8">
-                    <h1 class="text-2xl lg:text-3xl font-extrabold leading-tight">Plums <span
-                            class="text-base font-medium text-gray-500">• 1.00 kg</span></h1>
+                    <h1 class="text-2xl lg:text-3xl font-extrabold leading-tight">{{ $product->name }}</h1>
 
                     <div class="mt-4 flex items-end gap-4">
                         <div>
-                            <div class="text-3xl lg:text-4xl font-extrabold price-shadow">₹450.00</div>
-                            <div class="text-sm text-gray-400 line-through">₹480.00</div>
-                            <div class="text-sm text-green-600 font-medium mt-1">You save ₹30</div>
+                            <div class="text-3xl lg:text-4xl font-extrabold price-shadow">${{ $product->price }}</div>
                             <div class="text-xs text-gray-400 mt-1">Inclusive of all taxes</div>
                         </div>
 
@@ -87,13 +87,15 @@
                             <div class="font-medium">Delivery in 10-15 mins</div>
                             <div class="text-xs text-gray-500">Shipment of 1 item</div>
                         </div>
-                        <div class="text-sm font-medium text-green-600">In Stock</div>
+                        <div
+                            class="text-sm font-medium {{ $product->stock != 0 ? 'text-green-600' : 'text-grey-600' }}">
+                            {{ $product->stock != 0 ? 'In stock' : 'Out of stock' }}</div>
                     </div>
 
                     <!-- Quantity & Add -->
                     <div class="mt-5">
                         <label for="qty" class="block text-sm font-medium text-gray-700 mb-2">Quantity <span
-                                class="text-xs text-gray-400">(99 available)</span></label>
+                                class="text-xs text-gray-400">{{ $product->stock }}</span></label>
                         <div class="flex items-center gap-3">
                             <div class="flex items-center rounded-lg border overflow-hidden">
                                 <button id="dec" class="px-4 py-2 text-lg bg-white hover:bg-gray-100">−</button>
@@ -103,7 +105,7 @@
                             </div>
 
                             <button id="addToCart"
-                                class="ml-auto flex-1 lg:flex-none bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg px-6 py-3 shadow">🛒
+                                class="ml-auto flex-1 lg:flex-none {{ $product->stock == 0 ? 'bg-gray-700 hover:bg-gray-1000' : 'bg-green-600 hover:bg-green-700'  }} text-white font-semibold rounded-lg px-6 py-3 shadow">🛒
                                 Add to Cart</button>
                         </div>
                         <p class="text-xs text-gray-400 mt-2">Max order limit: <strong class="text-gray-700">10 per
@@ -115,7 +117,7 @@
                     <dl class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-600">
                         <div>
                             <dt class="text-xs text-gray-500">Origin</dt>
-                            <dd class="mt-1">India</dd>
+                            <dd class="mt-1">{{ $product->origin }}</dd>
                         </div>
                         <div>
                             <dt class="text-xs text-gray-500">Storage</dt>
@@ -129,7 +131,7 @@
                             <dt class="text-xs text-gray-500">Tags</dt>
                             <dd class="mt-1">
                                 <span
-                                    class="inline-block px-3 py-1 rounded-full text-xs bg-green-50 text-green-700">Fruit</span>
+                                    class="inline-block px-3 py-1 rounded-full text-xs bg-green-50 text-green-700">{{ $product->tag }}</span>
                             </dd>
                         </div>
                     </dl>
@@ -140,7 +142,7 @@
                 <div class="mt-6 bg-white rounded-xl p-4 shadow-sm">
                     <button aria-expanded="false" class="w-full flex items-center justify-between py-2 px-1"
                         id="toggleDetails">
-                        <span class="font-medium">Nutrition & Details</span>
+                        <span class="font-medium">Details</span>
                         <svg id="chev" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500"
                             viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
@@ -150,9 +152,7 @@
                     </button>
                     <div id="detailsPanel" class="mt-3 hidden text-sm text-gray-600">
                         <ul class="list-disc pl-5 space-y-1">
-                            <li>Calories: 46 kcal per 100g</li>
-                            <li>Rich in vitamins A & C</li>
-                            <li>Keep refrigerated for longer shelf life</li>
+                            <li>{{ $product->desc }}</li>
                         </ul>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
                     <div class="max-w-3xl mx-auto">
                         <button id="mobileAdd"
                             class="w-full bg-green-600 text-white rounded-full py-3 font-semibold shadow-lg">🛒 Add to
-                            Cart — ₹450</button>
+                            Cart — {{ $product->price }}</button>
                     </div>
                 </div>
 

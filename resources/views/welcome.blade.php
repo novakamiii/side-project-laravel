@@ -5,7 +5,7 @@
     <x-slot:title> Home </x-slot:title>
 </x-page-title>
 
-<body>
+<body class="bg-gray-50 text-gray-800 antialiased">
     <x-navbar> </x-navbar>
 
     <section class="px-4">
@@ -82,6 +82,9 @@
                 <x-slot:prodPrice>
                     $129.00
                 </x-slot:prodPrice>
+                <x-slot:prodId>
+                    1
+                </x-slot:prodID>
             </x-product-card>
 
             <x-product-card :sale="false">
@@ -97,6 +100,9 @@
                 <x-slot:prodPrice>
                     $89.00
                 </x-slot:prodPrice>
+                <x-slot:prodId>
+                    1
+                </x-slot:prodID>
             </x-product-card>
 
             <x-product-card :sale="false">
@@ -112,6 +118,9 @@
                 <x-slot:prodPrice>
                     $149.00
                 </x-slot:prodPrice>
+                <x-slot:prodId>
+                    1
+                </x-slot:prodID>
             </x-product-card>
         </div>
 

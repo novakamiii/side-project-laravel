@@ -5,7 +5,7 @@
     <x-slot:title> Profile </x-slot:title>
 </x-page-title>
 
-<body>
+<body class="bg-gray-50 text-gray-800 antialiased">
 
     <x-navbar> </x-navbar>
 
