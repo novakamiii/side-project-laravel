@@ -2,7 +2,7 @@
 <html lang="en">
 
 <x-page-title>
-    <x-slot:title> </x-slot:title>
+    <x-slot:title> Products </x-slot:title>
 </x-page-title>
 
 <body class="bg-gray-50 text-gray-800 antialiased">
