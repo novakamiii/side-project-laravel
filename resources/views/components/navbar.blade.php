@@ -50,9 +50,12 @@
                                     d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                 <!-- <text x="13" y="8" class="text-xs text-yellow-300">2</text> Adjust position as needed -->
                             </svg></a>
-                        <a href="/Profile"><img class="inline-block w-8 h-8 rounded-full ring-2 ring-white"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""></a>
+
+                        <a href="{{ route('profile.show') }}">
+                            <img class="inline-block w-8 h-8 rounded-full ring-2 ring-white"
+                                src="{{ asset('storage/' . Auth::user()->prof_img) }}" alt="avatar">
+                        </a>
+
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
                             <button type="submit"

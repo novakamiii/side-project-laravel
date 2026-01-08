@@ -6,17 +6,27 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 
 //Main
 Route::get('/', [NavigationController::class, 'index']);
 Route::view('/Home', 'welcome')->name('Home');
 Route::get('/Product', [NavigationController::class, 'productPage']);
 Route::get('/ShoppingCart', [NavigationController::class, 'shoppingCart']);
-Route::get('/Profile', [NavigationController::class, 'profilePage'])->middleware('auth');
 Route::get('/Products/{tag?}', [NavigationController::class, 'tags'])->name('product.tag');
 Route::get('/products', [NavigationController::class, 'search'])->name('product.search');
 
 //Sessions
+Route::get('/Profile', UserController::class)
+    ->middleware('auth')
+    ->name('profile.show');
+Route::patch('/profile', [UserController::class, 'changeDetails'])
+    ->middleware('auth')
+    ->name('profile.update');
+Route::patch('/profile-change', [UserController::class, 'changeProfilePicture'])
+    ->middleware('auth')
+    ->name('profile.change');
+
 Route::view('Login', 'login')->name('Login');
 Route::post('/login', LoginController::class)->middleware('throttle:5,1')->name('login.attempt');
 Route::post('/logout', function () {

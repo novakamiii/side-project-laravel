@@ -5,11 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NavigationController extends Controller
 {
     public function index(Request $request)
     {
+
+        // if (auth())
+        // {
+        //     $user = Auth::user();
+
+        //     return view('welcome', compact('user'));
+
+        // }
+
+
         return view('welcome');
     }
 
