@@ -105,7 +105,7 @@
                             </div>
 
                             <button id="addToCart"
-                                class="ml-auto flex-1 lg:flex-none {{ $product->stock == 0 ? 'bg-gray-700 hover:bg-gray-1000' : 'bg-green-600 hover:bg-green-700'  }} text-white font-semibold rounded-lg px-6 py-3 shadow">🛒
+                                class="ml-auto flex-1 lg:flex-none {{ $product->stock == 0 ? 'bg-gray-700 hover:bg-gray-1000' : 'bg-green-600 hover:bg-green-700' }} text-white font-semibold rounded-lg px-6 py-3 shadow">🛒
                                 Add to Cart</button>
                         </div>
                         <p class="text-xs text-gray-400 mt-2">Max order limit: <strong class="text-gray-700">10 per
@@ -207,8 +207,30 @@
                 alert('Max order limit is ' + maxLimit);
                 return;
             }
-            // Replace with real API call
-            alert(`Added ${value} item(s) to cart`);
+
+            // Get product ID from URL or data attribute
+            const productId = {{ $product->id }};
+
+            fetch(`/cart/add/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        quantity: value
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('✅ ' + data.message);
+                        qty.value = 1; // Reset quantity
+                    } else {
+                        alert('❌ ' + data.message);
+                    }
+                })
+                .catch(err => console.error('Error:', err));
         }
         addBtn.addEventListener('click', addToCartAction);
         mobileAdd.addEventListener('click', addToCartAction);

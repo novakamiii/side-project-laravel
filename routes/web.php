@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -12,7 +13,18 @@ use App\Http\Controllers\UserController;
 Route::get('/', [NavigationController::class, 'index']);
 Route::view('/Home', 'welcome')->name('Home');
 Route::get('/Product', [NavigationController::class, 'productPage']);
-Route::get('/ShoppingCart', [NavigationController::class, 'shoppingCart']);
+// Route::get('/ShoppingCart', [NavigationController::class, 'shoppingCart']);
+Route::view('/ShoppingCart', 'shopping-cart');
+
+// Cart Routes (Protected with auth middleware)
+Route::middleware('auth')->group(function () {
+    Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart', [CartController::class, 'getCart'])->name('cart.get');
+    Route::delete('/cart/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::patch('/cart/{cartItemId}', [CartController::class, 'updateQuantity'])->name('cart.update');
+});
+
+
 Route::get('/Products/{tag?}', [NavigationController::class, 'tags'])->name('product.tag');
 Route::get('/products', [NavigationController::class, 'search'])->name('product.search');
 

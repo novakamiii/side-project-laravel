@@ -11,4 +11,9 @@ class Product extends Model
     protected $casts = ['sale' => 'boolean'];
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
+
+    public function cartItems()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

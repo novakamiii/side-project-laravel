@@ -59,10 +59,10 @@ class NavigationController extends Controller
     }
 
 
-    public function shoppingCart()
-    {
-        return view('shopping-cart');
-    }
+    // public function shoppingCart()
+    // {
+    //     return view('shopping-cart');
+    // }
 
     public function profilePage()
     {
